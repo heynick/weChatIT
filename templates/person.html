@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>我的信息</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="/static/node_modules/jquery-weui/dist/lib/weui.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/example.css">
+</head>
+<body>
+    <div class="weui-cells" style="margin-top:0px;">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <div class="page__hd">
+                    <h1 class="page__title">{{ user_info.user_name }}
+                        <img src="{{ user_info.user_avatar }}" alt="头像" style="width:100px;float:left;margin-right:30px"/>
+                    </h1>
+                    <p class="page__desc">{{ user_info.user_eng_name }}</p>
+                    <p class="page__desc">{{ user_info.user_position }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><img src="/static/images/mobile.svg" style="width:22px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__bd">
+                <p>手机</p>
+            </div>
+            <div class="weui-cell__ft">{{ user_info.user_mobile }}</div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><img src="/static/images/phone.svg" style="width:22px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__bd">
+                <p>座机</p>
+            </div>
+            <div class="weui-cell__ft">{{ user_info.user_tel }}</div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><img src="/static/images/mail.svg" style="width:22px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__bd">
+                <p>邮箱</p>
+            </div>
+            <div class="weui-cell__ft">{{ user_info.user_email }}</div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><img src="/static/images/expressman.svg" style="width:22px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__bd">
+                <p>部门</p>
+            </div>
+            <div class="weui-cell__ft">
+                {% for num in user_dept_info%}
+                    {{ num.dept_name }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

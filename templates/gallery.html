@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>附件信息</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="/static/node_modules/jquery-weui/dist/lib/weui.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/node_modules/jquery-weui/dist/css/jquery-weui.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/example.css">
+</head>
+<body>
+    <div class="weui-gallery" style="display: block">
+        <span class="weui-gallery__img" style="background-image: url({{ img_info.image_url.url }});"></span>
+        <!--
+        <div class="weui-gallery__opr">
+            <a href="/record/{{ img_info.event_id }}" class="weui-gallery__del">
+                <i class="weui-icon-back"></i>
+            </a>
+        </div>-->
+    </div>
+</body>
+</html>

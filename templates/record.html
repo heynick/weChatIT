@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>申报记录</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="/static/node_modules/jquery-weui/dist/lib/weui.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/node_modules/jquery-weui/dist/css/jquery-weui.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/example.css">
+</head>
+<body>
+    <div class="weui-form-preview">
+        <div class="weui-form-preview__hd">
+            <label class="weui-form-preview__label">申报时间</label>
+            <em class="weui-form-preview__value">{{ event_info.event_date }}</em>
+        </div>
+        <div class="weui-form-preview__bd">
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">故障类型</label>
+                <span class="weui-form-preview__value">{{ event_name.event_name }}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">紧急程度</label>
+                <span class="weui-form-preview__value">{{ level_name.param_desc }}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">故障描述</label>
+                <span class="weui-form-preview__value">{{ event_info.event_desc }}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">联系姓名</label>
+                <span class="weui-form-preview__value">{{ event_info.contact_name }}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">联系电话</label>
+                <span class="weui-form-preview__value">{{ event_info.contact_mobile }}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">附件</label>
+            </div>
+            <div class="weui-form-preview__item">
+                <div class="weui-uploader">
+                    <div class="weui-uploader__bd">
+                        <ul class="weui-uploader__files">
+                            {% for img in attach_info %}
+                            <a href="/gallery/{{ img.id }}">
+                                <li class="weui-uploader__file" style="background-image: url({{ img.image_url.url }})"></li>
+                            </a>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="weui-form-preview__hd"></div>
+        <div class="weui-form-preview__bd">
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">事件状态</label>
+                <span id="event_state" class="weui-form-preview__value">{{ state_name.param_desc }}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">处理人</label>
+                <span class="weui-form-preview__value">{{ process_name.user_name }}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">处理描述</label>
+                <span class="weui-form-preview__value">{{ event_info.process_desc }}</span>
+            </div>
+        </div>
+        <div class="weui-form-preview__ft" id="update_event_state">
+        </div>
+    </div>
+    <!--script-->
+    <script src="/static/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/static/node_modules/jquery-weui/dist/js/jquery-weui.min.js"></script>
+    <script>
+        $(function(){
+            var event_state = '{{ state_name.param_desc }}'
+            /*console.log(event_state)*/
+            if(event_state == '已申报'){
+                var $preview = $('<button id="deleteDate" class="weui-form-preview__btn weui-form-preview__btn_primary">取消申报</button>')
+                $('#update_event_state').append($preview);
+                        $('#deleteDate').on('click', function () {
+                            $.confirm({
+                                    title: '温馨提示',
+                                    text: '您确认要取消申报吗？',
+                                    onOK: function () {
+                                        $(location).attr('href', '/cancel/success/{{ event_info.event_id}}');
+                                        },
+                                    onCancel: function () {
+                                        return;
+                                    }
+                                });
+                            });
+                                        }
+            else if(event_state == '已处理'){
+                var $preview = $('<button id="closeEvent" class="weui-form-preview__btn weui-form-preview__btn_primary">关闭事件</button>')
+                $('#update_event_state').append($preview);
+                $('#closeEvent').on('click', function () {
+                                $.confirm({
+                                    title: '温馨提示',
+                                    text: '您确认要关闭事件吗？',
+                                    onOK: function () {
+                                        $(location).attr('href', '/close/success/{{ event_info.event_id}}');
+                                        },
+                                    onCancel: function () {
+                                        return;
+                                    }
+                                });
+                            });
+            }
+            else{
+                return;
+            }
+        });
+    </script>
+</body>
+</html>

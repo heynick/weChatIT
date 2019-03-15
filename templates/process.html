@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>处理工单</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="/static/node_modules/jquery-weui/dist/lib/weui.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/node_modules/jquery-weui/dist/css/jquery-weui.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/example.css">
+</head>
+<body>
+    <form action="/process/success/{{ event_info.event_id}}" method="POST" enctype="multipart/form-data" name="form1" id="form1">{% csrf_token %}
+    <div class="weui-form-preview">
+        <div class="weui-form-preview__hd">
+            <label class="weui-form-preview__label">申报时间</label>
+            <em class="weui-form-preview__value">{{ event_info.event_date }}</em>
+        </div>
+        <div class="weui-form-preview__bd">
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">故障类型</label>
+                <span class="weui-form-preview__value">{{ event_name.event_name }}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">紧急程度</label>
+                <span class="weui-form-preview__value">{{ level_name.param_desc }}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">故障描述</label>
+                <span class="weui-form-preview__value">{{ event_info.event_desc }}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">联系姓名</label>
+                <span class="weui-form-preview__value">{{ event_info.contact_name }}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">联系电话</label>
+                <span class="weui-form-preview__value">{{ event_info.contact_mobile }}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">附件</label>
+            </div>
+            <div class="weui-form-preview__item">
+                <div class="weui-uploader">
+                    <div class="weui-uploader__bd">
+                        <ul class="weui-uploader__files">
+                            {% for img in attach_info %}
+                            <a href="/gallery/{{ img.id}}">
+                                <li class="weui-uploader__file" style="background-image: url({{ img.image_url.url }})"></li>
+                            </a>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="weui-form-preview__hd"></div>
+        <div class="weui-cells" style="margin-top:0px;">
+            <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <div class="weui-cell__bd">
+                    <label for="date" class="weui-label">事件状态</label>
+                </div>
+                <div class="weui-cell__ft">
+                    <input class="weui-input" id="eventState" type="text" name="eventState" placeholder="{{ state_name.param_desc }}">
+                </div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <div class="weui-cell__bd">
+                    <label for="date" class="weui-label">处理人</label>
+                </div>
+                <div class="weui-cell__ft">
+                    <input class="weui-input" id="processor_name" type="text" name="processor_name" placeholder="{{ processor_name }}">
+                </div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <div class="weui-cell__bd">
+                    <label for="date" class="weui-label">处理描述</label>
+                </div>
+            </a>
+            <div style="padding:5px 38px;">
+                <textarea class="weui-textarea" placeholder="请详细填写处理结果。" rows="4" id="processDesc" name="processDesc"></textarea>
+            </div>
+        </div>
+        <div style="padding:15px;" >
+            <a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="submitDate">提交</a>
+        </div>
+    </div>
+    </form>
+    <!--script-->
+    <script src="/static/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/static/node_modules/jquery-weui/dist/js/jquery-weui.min.js"></script>
+    <script>
+        $('#eventState').picker({
+            title: '请选择事件状态',
+            cols: [
+                {
+                    textAlign: 'center',
+                    values: ['处理中', '已处理']
+                }
+            ]
+        });
+        $('#processor_name').picker({
+            title: '请选择处理人',
+            cols: [
+                {
+
+                    textAlign: 'center',
+                    values: [
+                        {% for name in processor %}
+                            '{{ name.user_name }}',
+                        {% endfor %}
+                    ]
+                }
+            ]
+        });
+        $('#submitDate').on('click', function () {
+            var eventState = $('#eventState').val();
+            var processor_name = $('#processor_name').val();
+            var processDesc = $('#processDesc').val();
+            if(eventState==''||eventState==null){
+                $.alert('请更新事件状态', '温馨提示');
+                return false;
+            }
+            if(processor_name==''||processor_name==null){
+                $.alert('请选择处理人', '温馨提示');
+                return false;
+            }
+            if(processDesc==''||processDesc==null){
+                $.alert('请填写处理描述', '温馨提示');
+                return false;
+            }
+            $.confirm({
+                title: '温馨提示',
+                text: '您确认要提交信息吗？',
+                onOK: function () {
+                    $('#form1').submit();
+                    },
+                onCancel: function () {
+                    return;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

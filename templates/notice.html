@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>公告</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="/static/node_modules/jquery-weui/dist/lib/weui.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/node_modules/jquery-weui/dist/css/jquery-weui.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/notice.css">
+</head>
+<body class=" ">
+    <div class="notice" id="notice" oncut="return false" >
+        <div class="notice_main" id="notice_main">
+            <div class="notice_header">
+                <div class="notice_header_title">{{ notice_info.notice_title }}
+                    <a href="#attachment" target="_self" class="notice_header_title_attachmentTips">
+                        <span class="ww_noticeImg ww_noticeImg_ToolBtnAttachment"></span>
+                        <span class="notice_header_title_attachmentTips_count"></span>
+                    </a>
+                </div>
+                <div class="notice_header_subtitle">
+                    <span class="notice_header_subtitle_secrecy"></span>
+                    <span class="notice_header_subtitle_date">{{ update_time }}</span>
+                    <span class="notice_header_subtitle_author">{{ notice_info.notice_author }}</span>
+                </div>
+            </div>
+            <div class="notice_cnt">
+                <div class="notice_cnt_inner">
+                    <div class="notice_cnt_original" id="annnoucement_content_string">
+                        <p>{{ notice_info.notice_content }}</p>
+                    </div>
+                    <div class="notice_cnt_copy" id="annnoucement_content_string_copy">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="attachment" class="notice_filePanel">
+            <a class="notice_filePanel_itemWrap" target="_self" href="/gallery/{{ attach_info.id }}">
+                <div class="notice_filePanel_item">
+                    <div class="ww_noticeImg ww_noticeImg_NoticeAttachmentImage">
+                </div>
+                    <div class="notice_filePanel_item_intro">
+                        <div class="notice_filePanel_item_intro_title">{{ attach_info.image_name }}</div>
+                        <div class="notice_filePanel_item_intro_size"></div>
+                        <div class="notice_filePanel_item_accesory"></div>
+                    </div>
+                </div>
+            </a>
+            <div class="notice_filePanel_title"></div>
+        </div>
+    </div>
+</body>
+</html>

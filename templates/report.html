@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>故障申报</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="/static/node_modules/jquery-weui/dist/lib/weui.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/node_modules/jquery-weui/dist/css/jquery-weui.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/example.css">
+</head>
+<body>
+    <form action="/report/success/{{ contact_info.user_id }}" method="POST" enctype="multipart/form-data" name="form1" id="form1">
+        <div class="weui-cells" style="margin-top:0px;">
+            <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <div class="weui-cell__hd">
+                    <img src="/static/images/sort.svg" style="width:20px;margin-right:5px;display:block">
+                </div>
+                <div class="weui-cell__bd">
+                    <label for="date" class="weui-label">故障类型</label>
+                </div>
+                <div class="weui-cell__ft">
+                    <input class="weui-input" id="reportType" type="text" name="reportType">
+                </div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <div class="weui-cell__hd">
+                    <img src="/static/images/warn.svg" style="width:20px;margin-right:5px;display:block">
+                </div>
+                <div class="weui-cell__bd">
+                    <label for="date" class="weui-label">紧急程度</label>
+                </div>
+                <div class="weui-cell__ft">
+                        <input class="weui-input" id="reportLevel" type="text" name="reportLevel">
+                </div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <div class="weui-cell__hd">
+                    <img src="/static/images/time.svg" style="width:20px;margin-right:5px;display:block">
+                </div>
+                <div class="weui-cell__bd">
+                    <label for="date" class="weui-label">发生时间</label>
+                </div>
+                <div class="weui-cell__ft">
+                    <input class="weui-input" id="reportTime" type="text" name="reportTime">
+                </div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <div class="weui-cell__hd">
+                    <img src="/static/images/write.svg" style="width:20px;margin-right:5px;display:block">
+                </div>
+                <div class="weui-cell__bd">
+                    <label for="date" class="weui-label">故障描述</label>
+                </div>
+            </a>
+            <div style="padding:5px 38px;">
+                <textarea class="weui-textarea" placeholder="请详细填写故障信息，将有助于我们更快的解决问题。" rows="4" id="reportDesc" name="reportDesc"></textarea>
+            </div>
+            <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <div class="weui-cell__hd">
+                    <img src="/static/images/copy.svg" style="width:20px;margin-right:5px;display:block">
+                </div>
+                <div class="weui-cell__bd">
+                    <label for="date" class="weui-label">附件</label>
+                </div>
+                <div class="weui-uploader__info">0/6</div>
+            </a>
+            <div class="weui-uploader" style="padding:5px 38px;">
+                <div class="weui-uploader__bd">
+                    <ul class="weui-uploader__files" id="uploaderFiles">
+                        <!-- 预览图 -->
+                    </ul>
+                    <div class="weui-uploader__input-box" style="" id="showimg1">
+                        <input id="img1" class="weui-uploader__input" type="file" name="img1" accept="image/*">
+                    </div>
+                    <div class="weui-uploader__input-box" style="display:none" id="showimg2">
+                        <input id="img2" class="weui-uploader__input" type="file" name="img2" accept="image/*">
+                    </div>
+                    <div class="weui-uploader__input-box" style="display:none" id="showimg3">
+                        <input id="img3" class="weui-uploader__input" type="file" name="img3" accept="image/*">
+                    </div>
+                    <div class="weui-uploader__input-box" style="display:none" id="showimg4">
+                        <input id="img4" class="weui-uploader__input" type="file" name="img4" accept="image/*">
+                    </div>
+                    <div class="weui-uploader__input-box" style="display:none" id="showimg5">
+                        <input id="img5" class="weui-uploader__input" type="file" name="img5" accept="image/*">
+                    </div>
+                    <div class="weui-uploader__input-box" style="display:none" id="showimg6">
+                        <input id="img6" class="weui-uploader__input" type="file" name="img6" accept="image/*">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="weui-cells">
+            <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <div class="weui-cell__hd">
+                    <img src="/static/images/people.svg" alt="" style="width:20px;margin-right:5px;display:block">
+                </div>
+                <div class="weui-cell__bd">
+                    <label for="date" class="weui-label">联系姓名</label>
+                </div>
+                <input class="weui-input" id="contactName" type="text" placeholder="请输入姓名" name="contactName" value="{{ contact_info.user_name }}">
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:void(0);">
+                <div class="weui-cell__hd">
+                    <img src="/static/images/mobile.svg" alt="" style="width:20px;margin-right:5px;display:block">
+                </div>
+                <div class="weui-cell__bd">
+                    <label for="date" class="weui-label">联系电话</label>
+                </div>
+                <input class="weui-input" id="contactMobile" type="number" placeholder="请输入电话" name="contactMobile" value="{{ contact_info.user_mobile }}">
+            </a>
+        </div>
+        <div style="padding:15px;" >
+            <a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="submitDate">提交</a>
+        </div>
+    </form>
+    <!--script-->
+    <script src="/static/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/static/node_modules/jquery-weui/dist/js/jquery-weui.min.js"></script>
+    <!--<script src="/static/js/util-comm.js"></script>-->
+    <script>
+        $('#reportTime').calendar();
+        $('#reportType').picker({
+            title: '请选择故障类型',
+            cols: [
+                {
+                    textAlign: 'center',
+                    values: [
+                        {% for event_type in param_event_type %}
+                            '{{ event_type.event_name }}',
+                        {% endfor %}
+                    ]
+                }
+            ]
+        });
+        $('#reportLevel').picker({
+            title: '请选择紧急程度',
+            cols: [
+                {
+                    textAlign: 'center',
+                    values: [
+                        {% for report_level in param_report_level %}
+                            '{{ report_level.param_desc }}',
+                        {% endfor %}
+                    ],
+                    input:"普通"
+                }
+            ]
+        });
+        $(function(){
+            $('#img1').on('change',function(event){
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                if (file == null) {
+                    return;
+                }
+                reader.readAsDataURL(file);
+                reader.onload = function (e) {
+                    var img = new Image();
+                    img.src = e.target.result;
+                    console.log(img.src);
+                    var $preview = $('<li class="weui-uploader__file" style="background-image:url(' + img.src + ')"></li>');
+                    $('#uploaderFiles').append($preview);
+                    var num = $('.weui-uploader__file').length;
+                    $('.weui-uploader__info').text(num + '/6');
+                }
+                $('#showimg1').hide();
+                $('#showimg2').show();
+            });
+            $('#img2').on('change',function(event){
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                if (file == null) {
+                    return;
+                }
+                reader.readAsDataURL(file);
+                reader.onload = function (e) {
+                    var img = new Image();
+                    img.src = e.target.result;
+                    console.log(img.src);
+                    var $preview = $('<li class="weui-uploader__file" style="background-image:url(' + img.src + ')"></li>');
+                    $('#uploaderFiles').append($preview);
+                    var num = $('.weui-uploader__file').length;
+                    $('.weui-uploader__info').text(num + '/6');
+                }
+                $('#showimg2').hide();
+                $('#showimg3').show();
+            });
+            $('#img3').on('change',function(event){
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                if (file == null) {
+                    return;
+                }
+                reader.readAsDataURL(file);
+                reader.onload = function (e) {
+                    var img = new Image();
+                    img.src = e.target.result;
+                    console.log(img.src);
+                    var $preview = $('<li class="weui-uploader__file" style="background-image:url(' + img.src + ')"></li>');
+                    $('#uploaderFiles').append($preview);
+                    var num = $('.weui-uploader__file').length;
+                    $('.weui-uploader__info').text(num + '/6');
+                }
+                $('#showimg3').hide();
+                $('#showimg4').show();
+            });
+            $('#img4').on('change',function(event){
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                if (file == null) {
+                    return;
+                }
+                reader.readAsDataURL(file);
+                reader.onload = function (e) {
+                    var img = new Image();
+                    img.src = e.target.result;
+                    console.log(img.src);
+                    var $preview = $('<li class="weui-uploader__file" style="background-image:url(' + img.src + ')"></li>');
+                    $('#uploaderFiles').append($preview);
+                    var num = $('.weui-uploader__file').length;
+                    $('.weui-uploader__info').text(num + '/6');
+                }
+                $('#showimg4').hide();
+                $('#showimg5').show();
+            });
+            $('#img5').on('change',function(event){
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                if (file == null) {
+                    return;
+                }
+                reader.readAsDataURL(file);
+                reader.onload = function (e) {
+                    var img = new Image();
+                    img.src = e.target.result;
+                    console.log(img.src);
+                    var $preview = $('<li class="weui-uploader__file" style="background-image:url(' + img.src + ')"></li>');
+                    $('#uploaderFiles').append($preview);
+                    var num = $('.weui-uploader__file').length;
+                    $('.weui-uploader__info').text(num + '/6');
+                }
+                $('#showimg5').hide();
+                $('#showimg6').show();
+            });
+            $('#img6').on('change',function(event){
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                if (file == null) {
+                    return;
+                }
+                reader.readAsDataURL(file);
+                reader.onload = function (e) {
+                    var img = new Image();
+                    img.src = e.target.result;
+                    console.log(img.src);
+                    var $preview = $('<li class="weui-uploader__file" style="background-image:url(' + img.src + ')"></li>');
+                    $('#uploaderFiles').append($preview);
+                    var num = $('.weui-uploader__file').length;
+                    $('.weui-uploader__info').text(num + '/6');
+                }
+                $('#showimg6').hide();
+            });
+        });
+        $('#submitDate').on('click', function () {
+            var reportType = $('#reportType').val();
+            var reportLevel = $('#reportLevel').val();
+            var reportTime = $('#reportTime').val();
+            var reportDesc = $('#reportDesc').val();
+            var contactName = $('#contactName').val();
+            var contactMobile = $('#contactMobile').val();
+            if(reportType==''||reportType==null){
+                $.alert('故障类型不能为空', '温馨提示');
+                return false;
+            }
+            if(reportLevel==''||reportLevel==null){
+                $.alert('紧急程度不能为空', '温馨提示');
+                return false;
+            }
+            if(reportTime==''||reportTime==null){
+                $.alert('发生时间不能为空', '温馨提示');
+                return false;
+            }
+            if(reportDesc==''||reportDesc==null){
+                $.alert('故障描述不能为空', '温馨提示');
+                return false;
+            }
+            if(contactName==''||contactName==null){
+                $.alert('联系姓名不能为空', '温馨提示');
+                return false;
+            }
+            if(contactMobile==''||contactMobile==null){
+                $.alert('联系电话不能为空', '温馨提示');
+                return false;
+            }
+            $.confirm({
+                title: '温馨提示',
+                text: '您确认要提交故障申报吗？',
+                onOK: function () {
+                    /*获取指定id下所有input、textarea、select的值
+                    var formJson = _genReqData('body');
+                    $.ajax({
+                        type: 'POST',
+                        url: '/report/',
+                        data: formJson,
+                        dataType: 'json'
+                    });*/
+                    $('#form1').submit();
+                },
+                onCancel: function () {
+                    return;
+                }
+            });
+        });
+        /*使用ajax压缩并上传
+        $(function(){
+            var allowTypes = ['image/jpg','image/jpeg','image/png','image/gif'];
+            var maxSize = 2048*2048;
+            var maxWidth = 10000;
+            var maxCount = 6;
+            $('#uploaderInput').on('change',function (event){
+                var files = event.target.files;
+                if (files.length === 0) {
+                    return;
+                }
+                if (files.length > 6) {
+                    $.alert('最多上传6张图片', '温馨提示');
+                    return;
+                }
+                for (var i = 0, len = files.length; i < len; i++) {
+                    var file = files[i];
+                    var reader = new FileReader();
+                    if (allowTypes.indexOf(file.type) === -1) {
+                        $.alert('不支持该类型', '温馨提示');
+                        continue;
+                    }
+                    if (file.size > maxSize) {
+                        $.alert('文件超过限定大小', '温馨提示');
+                        continue;
+                    }
+                    reader.readAsDataURL(file);
+                    reader.onload = function (e) {
+                        var img = new Image();
+                        img.src = e.target.result;
+                        img.onload = function () {
+                            var w = Math.min(maxWidth, img.width);
+                            var h = img.height * (w / img.width);
+                            var canvas = document.createElement('canvas');
+                            var ctx = canvas.getContext('2d');
+                            canvas.width = w;
+                            canvas.height = h;
+                            ctx.drawImage(img, 0, 0, w, h);
+                            var base64 = canvas.toDataURL('image/jpeg');
+                            var $preview = $('<input class="weui-uploader__file weui-uploader__file_status" name="img' + i + '" id="img' + i + '" style="background-image:url(' + img.src + ')"><div class="weui-uploader__file-content">0%</div>');
+                            $('#uploaderFiles').append($preview);
+                            var num = $('.weui-uploader__file').length;
+                            $('.weui-uploader__info').text(num);
+                            var formData = new FormData();
+                            formData.append('images', base64);
+                            $.ajax({
+                                url: '/report/',
+                                type: 'POST',
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function (data) {
+                                    $preview.removeClass('weui-uploader__file_status');
+                                    $.toast('上传成功', function () {
+                                    });
+                                },
+                                error: function (xhr, type) {
+                                    alert('Ajax error!')
+                                }
+                            });
+                        };
+                    };
+                }
+                if ($('.weui-uploader__file').length >= maxCount-1 || files.length == 6) {
+                    $('#div_input-box').hide();
+                    return;
+                }
+            });
+        });*/
+    </script>
+</body>
+</html>

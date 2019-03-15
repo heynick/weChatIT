@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>常见问题</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="/static/node_modules/jquery-weui/dist/lib/weui.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/node_modules/jquery-weui/dist/css/jquery-weui.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/example.css">
+    <link rel="stylesheet" href="/static/css/question.css" >
+</head>
+<body>
+	<div class="choose_area">
+		<button class="choose_area_title">
+			<h3>选择问题大类</h3>
+			<img src="/static/images/sj.png"class="on">
+		</button>
+		<div class="choose_area_cont">
+            <ul>
+            {% for type in event_type %}
+				<li><h4>{{ type.event_name }}</h4></li>
+            {% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="choose_shcool">
+		<button class="choose_shcool_title" disabled>
+			<h3>选择问题子类</h3>
+			<img src="/static/images/sj.png">
+		</button>
+		<div class="choose_shcool_cont" id="sec_type"></div>
+	</div>
+	<div class="choose_subject">
+		<button class="choose_subject_title" disabled>
+			<h3>选择问题</h3>
+			<img src="/static/images/sj.png">
+		</button>
+		<div class="choose_subject_cont" id="th_type">
+        </div>
+	</div>
+    <div class="choose_subject">
+        <div class="choose_subject_cont" id="sol"></div>
+    </div>
+    <script src="/static/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/static/node_modules/jquery-weui/dist/js/jquery-weui.min.js"></script>
+    <script src="/static/js/question.js"></script>
+    <script>
+        $(function(){
+            $("body").css("min-height",document.documentElement.clientHeight);
+        });
+    </script>
+</body>
+</html>
